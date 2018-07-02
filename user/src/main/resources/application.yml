@@ -1,0 +1,24 @@
+eureka:
+  instance:
+        preferIpAddress: true
+        instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  client:
+    serviceUrl:
+      #defaultZone: http://10.10.2.85:20000/eureka/
+      #defaultZone: http://127.0.0.1:20000/eureka/
+      defaultZone: http://10.10.2.88:20000/eureka/
+server:
+  port: 7001
+#数据库配置
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://101.200.139.156:3306/test1?useUnicode=true&amp;characterEncoding=UTF-8
+    driverClassName: com.mysql.jdbc.Driver
+    username: root
+    password: xiaoban2015
+    type: com.alibaba.druid.pool.DruidDataSource
+    name: druid
+    druid:
+      testOnBorrow: true

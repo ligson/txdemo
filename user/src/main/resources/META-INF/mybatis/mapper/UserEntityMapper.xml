@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 用户表  -->
+<mapper namespace="org.ligson.user.entity.UserEntityMapper">
+
+    <!--通用表字段列表-->
+    <resultMap id="BaseResultMap"
+               type="org.ligson.user.entity.UserEntity">
+        <result column="id" property="id"
+                jdbcType="VARCHAR"/>
+        <result column="name" property="name"
+                jdbcType="VARCHAR"/>
+        <result column="amt" property="amt"
+                jdbcType="INTEGER"/>
+    </resultMap>
+    <!--通用表字段列表-->
+
+    <!--通用查询条件组装-->
+    <sql id="whereCondition">
+        <if test="id != null">
+            AND `id`=#{id,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            AND `name`=#{name,jdbcType=VARCHAR}
+        </if>
+        <if test="amt != null">
+            AND `amt`=#{amt,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!--like查询条件组装-->
+    <sql id="whereLikeCondition">
+        <if test="id != null">
+            AND `id` LIKE #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            AND `name` LIKE #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="amt != null">
+            AND `amt` LIKE #{amt,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!--查询字段列表拼装-->
+    <sql id="baseColumnList">
+        `id`,
+        `name`,
+        `amt`
+    </sql>
+
+    <!--
+    方法名称: insert
+    调用路径: UserEntityMapper.insert
+    开发信息:
+    处理信息: 保存记录
+    -->
+    <insert id="insert"
+            parameterType="org.ligson.user.entity.UserEntity">
+        INSERT INTO t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="amt != null">
+                `amt`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="amt != null">
+                #{amt,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <!--
+    方法名称: update
+    调用路径: UserEntityMapper.update
+    开发信息:
+    处理信息: 修改记录
+    -->
+    <update id="update"
+            parameterType="org.ligson.user.entity.UserEntity">
+        UPDATE t_user
+        <set>
+            <if test="id != null">
+                `id` = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="amt != null">
+                `amt` = #{amt,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE 1=1
+        AND `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!--
+    方法名称: updateBak
+    调用路径: UserEntityMapper.updateBak
+    开发信息:
+    处理信息: 修改记录
+    -->
+    <update id="updateBak"
+            parameterType="org.ligson.user.entity.UserEntity">
+        UPDATE t_user
+        <set>
+            `id` = #{id,jdbcType=VARCHAR},
+            `name` = #{name,jdbcType=VARCHAR},
+            `amt` = #{amt,jdbcType=INTEGER},
+        </set>
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </update>
+
+    <!--
+    方法名称: delete
+    调用路径:UserEntityMapper.delete
+    开发信息:
+    处理信息: 删除记录
+    -->
+    <delete id="delete"
+            parameterType="org.ligson.user.entity.UserEntity">
+        DELETE FROM t_user
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </delete>
+
+    <!--
+    方法名称: findBy
+    调用路径: UserEntityMapper.findBy
+    开发信息:
+    处理信息: 根据主键查询记录
+    -->
+    <select id="findBy"
+            parameterType="org.ligson.user.entity.UserEntity"
+            resultType="org.ligson.user.entity.UserEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_user
+        WHERE 1=1
+        <include refid="whereCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        <!--一条-->
+        <include refid="CommonEntity.selectOne"/>
+    </select>
+
+    <!--
+    方法名称: countBy
+    调用路径: UserEntityMapper.countBy
+    开发信息:
+    处理信息: 根据主键统计记录
+    -->
+    <select id="countBy"
+            parameterType="org.ligson.user.entity.UserEntity"
+            resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM t_user
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </select>
+
+    <!--
+    方法名称: getPaginationList
+    调用路径: UserEntityMapper.getPaginationList
+    开发信息:
+    处理信息: 分页查询记录
+    -->
+    <select id="getPaginationList"
+            parameterType="org.ligson.user.entity.UserEntity"
+            resultType="org.ligson.user.entity.UserEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_user
+        WHERE 1=1
+        <include refid="whereCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        <!-- 分页条 -->
+        <include refid="CommonEntity.pagination"/>
+    </select>
+
+    <!--
+    方法名称: getPaginationList-count
+    调用路径: UserEntityMapper.getPaginationList-count
+    开发信息:
+    处理信息: 查询记录数
+    -->
+    <select id="getPaginationList-count"
+            parameterType="org.ligson.user.entity.UserEntity"
+            resultType="int">
+        SELECT count(1) FROM t_user
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </select>
+
+    <!--
+    方法名称: getList
+    调用路径: UserEntityMapper.getList
+    开发信息:
+    处理信息: 根据条件查询记录
+    -->
+    <select id="getList"
+            parameterType="org.ligson.user.entity.UserEntity"
+            resultType="org.ligson.user.entity.UserEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_user
+        WHERE 1=1
+        <include refid="whereCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        limit 0,100
+    </select>
+
+    <!--
+    方法名称: likeBy
+    调用路径: UserEntityMapper.likeBy
+    开发信息:
+    处理信息: 分页查询记录
+    -->
+    <select id="likeBy"
+            parameterType="org.ligson.user.entity.UserEntity"
+            resultType="org.ligson.user.entity.UserEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_user
+        WHERE 1=1
+        <include refid="whereLikeCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        <!-- 分页条 -->
+        <include refid="CommonEntity.pagination"/>
+    </select>
+
+    <!--
+    方法名称: likeBy-count
+    调用路径: UserEntityMapper.likeBy-count
+    开发信息:
+    处理信息: 查询记录数
+    -->
+    <select id="likeBy-count"
+            parameterType="org.ligson.user.entity.UserEntity"
+            resultType="int">
+        SELECT count(1) FROM t_user
+        WHERE 1=1
+        <include refid="whereLikeCondition"/>
+    </select>
+
+    <!--用户自定义代码开始-->
+
+    <!--用户自定义代码结束-->
+</mapper>

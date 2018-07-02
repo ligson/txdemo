@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 订单表  -->
+<mapper namespace="org.ligson.order.entity.OrderEntityMapper">
+
+    <!--通用表字段列表-->
+    <resultMap id="BaseResultMap"
+               type="org.ligson.order.entity.OrderEntity">
+        <result column="id" property="id"
+                jdbcType="VARCHAR"/>
+        <result column="amt" property="amt"
+                jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime"
+                jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId"
+                jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--通用表字段列表-->
+
+    <!--通用查询条件组装-->
+    <sql id="whereCondition">
+        <if test="id != null">
+            AND `id`=#{id,jdbcType=VARCHAR}
+        </if>
+        <if test="amt != null">
+            AND `amt`=#{amt,jdbcType=INTEGER}
+        </if>
+        <if test="createTime != null">
+            AND `create_time`=#{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="userId != null">
+            AND `user_id`=#{userId,jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <!--like查询条件组装-->
+    <sql id="whereLikeCondition">
+        <if test="id != null">
+            AND `id` LIKE #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="amt != null">
+            AND `amt` LIKE #{amt,jdbcType=INTEGER}
+        </if>
+        <if test="createTime != null">
+            AND `create_time` LIKE #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="userId != null">
+            AND `user_id` LIKE #{userId,jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <!--查询字段列表拼装-->
+    <sql id="baseColumnList">
+        `id`,
+        `amt`,
+        `create_time`,
+        `user_id`
+    </sql>
+
+    <!--
+    方法名称: insert
+    调用路径: OrderEntityMapper.insert
+    开发信息:
+    处理信息: 保存记录
+    -->
+    <insert id="insert"
+            parameterType="org.ligson.order.entity.OrderEntity">
+        INSERT INTO t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="amt != null">
+                `amt`,
+            </if>
+            <if test="createTime != null">
+                `create_time`,
+            </if>
+            <if test="userId != null">
+                `user_id`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="amt != null">
+                #{amt,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--
+    方法名称: update
+    调用路径: OrderEntityMapper.update
+    开发信息:
+    处理信息: 修改记录
+    -->
+    <update id="update"
+            parameterType="org.ligson.order.entity.OrderEntity">
+        UPDATE t_order
+        <set>
+            <if test="id != null">
+                `id` = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="amt != null">
+                `amt` = #{amt,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                `user_id` = #{userId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE 1=1
+        AND `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!--
+    方法名称: updateBak
+    调用路径: OrderEntityMapper.updateBak
+    开发信息:
+    处理信息: 修改记录
+    -->
+    <update id="updateBak"
+            parameterType="org.ligson.order.entity.OrderEntity">
+        UPDATE t_order
+        <set>
+            `id` = #{id,jdbcType=VARCHAR},
+            `amt` = #{amt,jdbcType=INTEGER},
+            `create_time` = #{createTime,jdbcType=TIMESTAMP},
+            `user_id` = #{userId,jdbcType=VARCHAR},
+        </set>
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </update>
+
+    <!--
+    方法名称: delete
+    调用路径:OrderEntityMapper.delete
+    开发信息:
+    处理信息: 删除记录
+    -->
+    <delete id="delete"
+            parameterType="org.ligson.order.entity.OrderEntity">
+        DELETE FROM t_order
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </delete>
+
+    <!--
+    方法名称: findBy
+    调用路径: OrderEntityMapper.findBy
+    开发信息:
+    处理信息: 根据主键查询记录
+    -->
+    <select id="findBy"
+            parameterType="org.ligson.order.entity.OrderEntity"
+            resultType="org.ligson.order.entity.OrderEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_order
+        WHERE 1=1
+        <include refid="whereCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        <!--一条-->
+        <include refid="CommonEntity.selectOne"/>
+    </select>
+
+    <!--
+    方法名称: countBy
+    调用路径: OrderEntityMapper.countBy
+    开发信息:
+    处理信息: 根据主键统计记录
+    -->
+    <select id="countBy"
+            parameterType="org.ligson.order.entity.OrderEntity"
+            resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM t_order
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </select>
+
+    <!--
+    方法名称: getPaginationList
+    调用路径: OrderEntityMapper.getPaginationList
+    开发信息:
+    处理信息: 分页查询记录
+    -->
+    <select id="getPaginationList"
+            parameterType="org.ligson.order.entity.OrderEntity"
+            resultType="org.ligson.order.entity.OrderEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_order
+        WHERE 1=1
+        <include refid="whereCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        <!-- 分页条 -->
+        <include refid="CommonEntity.pagination"/>
+    </select>
+
+    <!--
+    方法名称: getPaginationList-count
+    调用路径: OrderEntityMapper.getPaginationList-count
+    开发信息:
+    处理信息: 查询记录数
+    -->
+    <select id="getPaginationList-count"
+            parameterType="org.ligson.order.entity.OrderEntity"
+            resultType="int">
+        SELECT count(1) FROM t_order
+        WHERE 1=1
+        <include refid="whereCondition"/>
+    </select>
+
+    <!--
+    方法名称: getList
+    调用路径: OrderEntityMapper.getList
+    开发信息:
+    处理信息: 根据条件查询记录
+    -->
+    <select id="getList"
+            parameterType="org.ligson.order.entity.OrderEntity"
+            resultType="org.ligson.order.entity.OrderEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_order
+        WHERE 1=1
+        <include refid="whereCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        limit 0,100
+    </select>
+
+    <!--
+    方法名称: likeBy
+    调用路径: OrderEntityMapper.likeBy
+    开发信息:
+    处理信息: 分页查询记录
+    -->
+    <select id="likeBy"
+            parameterType="org.ligson.order.entity.OrderEntity"
+            resultType="org.ligson.order.entity.OrderEntity">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM t_order
+        WHERE 1=1
+        <include refid="whereLikeCondition"/>
+        <!--排序-->
+        <include refid="CommonEntity.sort"/>
+        <!-- 分页条 -->
+        <include refid="CommonEntity.pagination"/>
+    </select>
+
+    <!--
+    方法名称: likeBy-count
+    调用路径: OrderEntityMapper.likeBy-count
+    开发信息:
+    处理信息: 查询记录数
+    -->
+    <select id="likeBy-count"
+            parameterType="org.ligson.order.entity.OrderEntity"
+            resultType="int">
+        SELECT count(1) FROM t_order
+        WHERE 1=1
+        <include refid="whereLikeCondition"/>
+    </select>
+
+    <!--用户自定义代码开始-->
+
+    <!--用户自定义代码结束-->
+</mapper>
