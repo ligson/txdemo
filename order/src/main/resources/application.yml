@@ -22,3 +22,6 @@ spring:
     name: druid
     druid:
       testOnBorrow: true
+logging:
+  level:
+    org.ligson: debug
