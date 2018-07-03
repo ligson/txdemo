@@ -1,5 +1,6 @@
 package org.ligson.gateway.service.impl;
 
+import com.codingapi.tx.annotation.ITxTransaction;
 import com.codingapi.tx.annotation.TxTransaction;
 import com.xb.fwc.api.vo.WebResult;
 import org.ligson.fwc.core.dao.BaseDao;
@@ -29,7 +30,7 @@ import java.util.Map;
  * 系统流水服务实现
  */
 @Service
-public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, String> implements WasterBookService {
+public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, String> implements WasterBookService, ITxTransaction {
     @Autowired
     private WasterBookDao wasterBookDao;
     @Autowired

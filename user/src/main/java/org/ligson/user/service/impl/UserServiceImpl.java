@@ -1,11 +1,11 @@
 package org.ligson.user.service.impl;
 
+import com.codingapi.tx.annotation.ITxTransaction;
+import org.ligson.fwc.core.dao.BaseDao;
+import org.ligson.fwc.core.service.impl.BaseServiceImpl;
 import org.ligson.user.dao.UserDao;
 import org.ligson.user.entity.UserEntity;
 import org.ligson.user.service.UserService;
-import java.lang.String;
-import org.ligson.fwc.core.dao.BaseDao;
-import org.ligson.fwc.core.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * 用户表服务实现
  */
 @Service
-public class UserServiceImpl extends BaseServiceImpl<UserEntity, String> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserEntity, String> implements UserService, ITxTransaction {
     @Autowired
     private UserDao userDao;
 

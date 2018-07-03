@@ -52,7 +52,7 @@ public class TxConfig {
     public AspectJExpressionPointcutAdvisor pointcutAdvisor() {
         AspectJExpressionPointcutAdvisor pointcutAdvisor = new AspectJExpressionPointcutAdvisor();
         pointcutAdvisor.setAdvice(transactionInterceptor());
-        pointcutAdvisor.setExpression("execution(* com.xb..*.service..*Impl.*(..))");
+        pointcutAdvisor.setExpression("execution(* org.ligson..*.service..*Impl.*(..))");
         return pointcutAdvisor;
     }
 }

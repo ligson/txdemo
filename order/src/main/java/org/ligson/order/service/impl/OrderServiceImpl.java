@@ -1,5 +1,6 @@
 package org.ligson.order.service.impl;
 
+import com.codingapi.tx.annotation.ITxTransaction;
 import org.ligson.order.dao.OrderDao;
 import org.ligson.order.entity.OrderEntity;
 import org.ligson.order.service.OrderService;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 订单表服务实现
  */
 @Service
-public class OrderServiceImpl extends BaseServiceImpl<OrderEntity, String> implements OrderService {
+public class OrderServiceImpl extends BaseServiceImpl<OrderEntity, String> implements OrderService,ITxTransaction {
     @Autowired
     private OrderDao orderDao;
 
