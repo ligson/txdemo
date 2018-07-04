@@ -1,6 +1,5 @@
 package org.ligson.user.service.impl;
 
-import com.codingapi.tx.annotation.ITxTransaction;
 import com.codingapi.tx.annotation.TxTransaction;
 import lombok.extern.slf4j.Slf4j;
 import org.ligson.fwc.core.dao.BaseDao;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Slf4j
-public class UserServiceImpl extends BaseServiceImpl<UserEntity, String> implements UserService, ITxTransaction {
+public class UserServiceImpl extends BaseServiceImpl<UserEntity, String> implements UserService {
     @Autowired
     private UserDao userDao;
 

@@ -1,6 +1,5 @@
 package org.ligson.order.service.impl;
 
-import com.codingapi.tx.annotation.ITxTransaction;
 import com.codingapi.tx.annotation.TxTransaction;
 import org.ligson.fwc.core.dao.BaseDao;
 import org.ligson.fwc.core.service.impl.BaseServiceImpl;
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 订单表服务实现
  */
 @Service
-public class OrderServiceImpl extends BaseServiceImpl<OrderEntity, String> implements OrderService, ITxTransaction {
+public class OrderServiceImpl extends BaseServiceImpl<OrderEntity, String> implements OrderService {
     @Autowired
     private OrderDao orderDao;
 
@@ -23,7 +22,14 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderEntity, String> imple
     public BaseDao<OrderEntity, String> getDao() {
         return orderDao;
     }
+
     //<!--用户自定义代码开始-->
+    @TxTransaction
+    @Transactional
+    @Override
+    public void add(OrderEntity orderEntity) {
+        super.add(orderEntity);
+    }
 
     @TxTransaction
     @Transactional

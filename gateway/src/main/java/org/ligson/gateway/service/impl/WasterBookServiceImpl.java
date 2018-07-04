@@ -1,6 +1,5 @@
 package org.ligson.gateway.service.impl;
 
-import com.codingapi.tx.annotation.ITxTransaction;
 import com.codingapi.tx.annotation.TxTransaction;
 import com.xb.fwc.api.vo.WebResult;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +34,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, String> implements WasterBookService, ITxTransaction {
+public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, String> implements WasterBookService {
     @Autowired
     private WasterBookDao wasterBookDao;
     @Autowired
@@ -73,13 +72,13 @@ public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, Str
         orderVo.setAmt(100);
         orderVo.setUserId("1");
         orderVo.setCreateTime(new Date());
-        log.debug("开始调用订单服务");
+        log.debug("开始调用订单服务（insert操作，步骤1）");
         ResponseEntity<WebResult> resultResponseEntity = restTemplate.exchange(vo2Entity(orderVo, "http://order-service/order/add.json"), WebResult.class);
         assert resultResponseEntity.getStatusCode() == HttpStatus.OK;
         assert resultResponseEntity.getBody().isSuccess();
         Map<String, String> params = new HashMap<>();
         params.put("pk", "1");
-        log.debug("开始查询用户服务");
+        log.debug("开始查询用户服务（select操作，步骤2）");
         resultResponseEntity = restTemplate.exchange(vo2Entity("1", "http://user-service/user/get.json"), WebResult.class);
         assert resultResponseEntity.getStatusCode() == HttpStatus.OK;
         assert resultResponseEntity.getBody().isSuccess();
@@ -87,7 +86,7 @@ public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, Str
         UserVo userVo = new UserVo();
         userVo.setId("1");
         userVo.setAmt(orderVo.getAmt() + userVo2.getAmt());
-        log.debug("开始修改用户服务");
+        log.debug("开始修改用户服务（update操作，步骤3）");
         resultResponseEntity = restTemplate.exchange(vo2Entity(userVo, "http://user-service/user/update.json"), WebResult.class);
         assert resultResponseEntity.getStatusCode() == HttpStatus.OK;
         assert resultResponseEntity.getBody().isSuccess();
@@ -95,8 +94,9 @@ public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, Str
         wasterBookEntity.setAmt(orderVo.getAmt());
         wasterBookEntity.setStatus(1);
         wasterBookEntity.setUserId("1");
-        log.debug("开始保存流水");
+        log.debug("开始保存流水（insert操作，步骤4）");
         add(wasterBookEntity);
+        //模拟报错，理论上步骤1.3.4应该回滚。但是最后只有4回滚了,1和3未回滚
         System.out.println(100 / (2018 >> 12));
         return resultResponseEntity.getBody();
     }
