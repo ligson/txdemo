@@ -1,6 +1,6 @@
 package org.ligson.gateway.service;
 
-import com.xb.fwc.api.vo.WebResult;
+import org.ligson.fwc.api.vo.WebResult;
 import org.ligson.fwc.core.service.BaseService;
 import org.ligson.gateway.entity.WasterBookEntity;
 

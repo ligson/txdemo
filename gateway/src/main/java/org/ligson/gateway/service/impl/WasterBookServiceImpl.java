@@ -1,9 +1,9 @@
 package org.ligson.gateway.service.impl;
 
 import com.codingapi.tx.annotation.TxTransaction;
-import com.xb.fwc.api.vo.WebResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.ligson.fwc.api.vo.WebResult;
 import org.ligson.fwc.core.dao.BaseDao;
 import org.ligson.fwc.core.service.impl.BaseServiceImpl;
 import org.ligson.gateway.dao.WasterBookDao;
