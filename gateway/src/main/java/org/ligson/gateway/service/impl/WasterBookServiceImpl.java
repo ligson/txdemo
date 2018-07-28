@@ -1,6 +1,5 @@
 package org.ligson.gateway.service.impl;
 
-import com.codingapi.tx.annotation.TxTransaction;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.ligson.fwc.api.vo.WebResult;
@@ -57,7 +56,6 @@ public class WasterBookServiceImpl extends BaseServiceImpl<WasterBookEntity, Str
     }
 
     //<!--用户自定义代码开始-->
-    @TxTransaction(isStart = true)
     @Transactional
     @Override
     public WebResult test() {

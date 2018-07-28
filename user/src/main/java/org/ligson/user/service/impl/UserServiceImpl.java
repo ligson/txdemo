@@ -1,6 +1,5 @@
 package org.ligson.user.service.impl;
 
-import com.codingapi.tx.annotation.TxTransaction;
 import lombok.extern.slf4j.Slf4j;
 import org.ligson.fwc.core.dao.BaseDao;
 import org.ligson.fwc.core.service.impl.BaseServiceImpl;
@@ -28,7 +27,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserEntity, String> impleme
 
     @Override
     @Transactional
-    @TxTransaction
     public void update(UserEntity userEntity) {
         super.update(userEntity);
         log.debug("修改");

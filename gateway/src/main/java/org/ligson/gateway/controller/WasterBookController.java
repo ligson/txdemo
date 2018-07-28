@@ -32,5 +32,6 @@ public class WasterBookController extends CrudController<WasterBookEntity, Strin
     public WebResult test() {
         return wasterBookService.test();
     }
+
     //<!--用户自定义代码结束-->
 }

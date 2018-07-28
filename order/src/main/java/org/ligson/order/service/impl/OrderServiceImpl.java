@@ -1,6 +1,5 @@
 package org.ligson.order.service.impl;
 
-import com.codingapi.tx.annotation.TxTransaction;
 import org.ligson.fwc.core.dao.BaseDao;
 import org.ligson.fwc.core.service.impl.BaseServiceImpl;
 import org.ligson.order.dao.OrderDao;
@@ -24,14 +23,12 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderEntity, String> imple
     }
 
     //<!--用户自定义代码开始-->
-    @TxTransaction
     @Transactional
     @Override
     public void add(OrderEntity orderEntity) {
         super.add(orderEntity);
     }
 
-    @TxTransaction
     @Transactional
     @Override
     public void update(OrderEntity orderEntity) {
